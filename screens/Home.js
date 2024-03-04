@@ -23,14 +23,14 @@ Notifications.setNotificationHandler({
 
 export default function Home() {
   const todos = useSelector((state) => state.todos.todos);
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
 
-  // useEffect(() => {
-  //   registerForPushNotificationsAsync().then((token) =>
-  //     setExpoPushToken(token)
-  //   );
-  //   checkFirstLaunch(navigation);
-  // }, []);
+  useEffect(() => {
+    // registerForPushNotificationsAsync().then((token) =>
+    //   setExpoPushToken(token)
+    // );
+    checkFirstLaunch(navigation);
+  }, []);
 
   return (
     <>

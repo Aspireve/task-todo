@@ -1,11 +1,12 @@
-import 'react-native-gesture-handler';
-import { StyleSheet, View, StatusBar } from "react-native";
+import "react-native-gesture-handler";
+import { StyleSheet, StatusBar } from "react-native";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import Home from "./screens/Home";
+import Onboarding from "./screens/Onboarding";
 import NewTask from "./screens/NewTask";
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
 
@@ -15,11 +16,6 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Home">
           <Stack.Screen
-            name="Home"
-            component={Home}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
             name="Add"
             component={NewTask}
             options={{
@@ -27,11 +23,21 @@ export default function App() {
               headerTitle: "Task",
             }}
           />
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Onboarding"
+            component={Onboarding}
+            options={{
+              headerShown: false,
+              presentation: 'modal',
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
-      {/* <View style={styles.container}>
-        <Home />
-      </View> */}
     </Provider>
   );
 }
