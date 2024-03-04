@@ -7,25 +7,25 @@ const initialState = {
       "id": 1,
       "text": "Take out the trash",
       "isCompleted": true,
-      "time": new Date("2024-03-02 00:00:00")
+      "time": "2024-03-02 00:00:00"
     },
     {
       "id": 2,
       "text": "Meeting with the boss",
       "isCompleted": false,
-      "time": new Date("2024-03-03 00:00:00")
+      "time": "2024-03-03 00:00:00"
     },
     {
       "id": 3,
       "text": "Dentist appointment",
       "isCompleted": true,
-      "time": new Date("2024-03-10 00:00:00")
+      "time": "2024-03-10 00:00:00"
     },
     {
       "id": 4,
       "text": "Dentist appointment",
       "isCompleted": true,
-      "time": new Date("2024-03-21 00:00:00")
+      "time": "2024-03-21 00:00:00"
     }
   ],
 };
@@ -51,7 +51,6 @@ export const todosSlice = createSlice({
         }
         return todo;
       });
-      console.log("new", state.todos)
     },
     deleteTodo: (state, action) => {
       const id = action.payload;
@@ -68,7 +67,6 @@ export const fetchTodos = () => async (dispatch) => {
     const todosString = await AsyncStorage.getItem("todos");
     if (todosString !== null) {
       const todos = JSON.parse(todosString);
-      console.log("fetch",todosString)
       dispatch(setTodos(todos));
     }
   } catch (error) {
@@ -76,9 +74,8 @@ export const fetchTodos = () => async (dispatch) => {
   }
 };
 
-export const saveTodos = (todos) => async (dispatch) => {
+export const saveTodos = (todos) => async () => {
   try {
-    console.log("todos", todos)
     await AsyncStorage.setItem("todos", JSON.stringify(todos));
   } catch (error) {
     console.error("Error saving todos:", error);

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteTodo } from "../redux/slice";
@@ -15,7 +15,7 @@ export default function Tasks({ id, text, isCompleted, time }) {
       const updatedTodos = listTodos.filter((todo) => todo.id !== id);
       dispatch(saveTodos(updatedTodos));
     } catch (e) {
-      console.log(e);
+      Alert.alert("Error", "Error Deleting Task")
     }
   };
 

@@ -6,41 +6,38 @@ import {
   StatusBar,
   StyleSheet,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import getDateStatus from "../utility/getDateStatus";
 import { useSelector, useDispatch } from "react-redux";
 import ListTasks from "./ListTasks";
-import { hideCompleted, setTodos } from "../redux/slice";
+import { fetchTodos, hideCompleted, setTodos } from "../redux/slice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function DisplayTasks() {
+  const [todayTodos, setTodayTodos] = useState([]);
+  const [laterTodos, setLaterTodos] = useState([]);
+  const todos = useSelector((state) => state.todos.todos);
   const [isHidden, setIsHidden] = useState(false);
   const dispatch = useDispatch();
-
-  const todos = useSelector((state) => state.todos.todos);
 
   const handleHideCompleted = async () => {
     if (isHidden) {
       setIsHidden(false);
-      console.log("here");
-      const todos = await AsyncStorage.getItem("todos");
-      console.log("fet", todos);
-      if (todos !== null) {
-        dispatch(setTodos(JSON.parse(todos)));
-      }
+      await AsyncStorage.getItem("todos").then((todos) => {
+        if (todos !== null) {
+          dispatch(setTodos(JSON.parse(todos)));
+        }
+      });
       return;
     }
     setIsHidden(!isHidden);
     dispatch(hideCompleted());
-    console.log("first");
   };
 
-  const todayTodos = todos.filter(
-    (todo) => getDateStatus(todo.time) === "TODAY"
-  );
-  const laterTodos = todos.filter(
-    (todo) => getDateStatus(todo.time) === "FUTURE"
-  );
+  useLayoutEffect(() => {
+    setTodayTodos(todos.filter((todo) => getDateStatus(todo.time) === "TODAY"))
+    setLaterTodos(todos.filter((todo) => getDateStatus(todo.time) === "FUTURE"))
+  } , [todos])
 
   return (
     <ScrollView style={styles.container}>

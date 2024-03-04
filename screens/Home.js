@@ -33,7 +33,7 @@ export const Home = () => {
   // }, []);
 
   return (
-    todos.length > 0 ? <DisplayTasks /> : <TaskComplete />
+    todos.length > 0 ? <DisplayTasks/> : <TaskComplete />
     
   );
 };

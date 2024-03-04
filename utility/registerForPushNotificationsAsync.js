@@ -16,7 +16,6 @@ const registerForPushNotificationsAsync = async () => {
         return;
       }
       token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log(token);
     } else {
         return;
     }
