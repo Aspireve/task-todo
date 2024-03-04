@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet } from "react-native";
+import { Image } from "expo-image";
 
 export default function TaskComplete() {
   return (
@@ -11,7 +12,7 @@ export default function TaskComplete() {
             height: 250,
             display: "block",
             marginBottom: 20,
-            resizeMode: "contain",
+            contentFit: "contain",
           }}
         />
         <Text style={{ fontSize: 20, color: "#000", fontWeight: "bold" }}>

@@ -10,7 +10,7 @@ import React, { useEffect, useLayoutEffect, useState } from "react";
 import getDateStatus from "../utility/getDateStatus";
 import { useSelector, useDispatch } from "react-redux";
 import ListTasks from "./ListTasks";
-import { fetchTodos, hideCompleted, setTodos } from "../redux/slice";
+import { hideCompleted, setTodos } from "../redux/slice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function DisplayTasks() {

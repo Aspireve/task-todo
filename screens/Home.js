@@ -8,9 +8,10 @@ import registerForPushNotificationsAsync from "../utility/registerForPushNotific
 import { useNavigation } from "@react-navigation/native";
 import checkFirstLaunch from "../utility/checkFirstLaunch";
 import { StyleSheet, View, Text } from "react-native";
-import { Image } from 'expo-image';
+import { Image } from "expo-image";
 import DisplayTasks from "../components/DisplayTasks";
 import TaskComplete from "../components/TaskComplete";
+import AddTask from "../components/AddTask";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -20,8 +21,7 @@ Notifications.setNotificationHandler({
   }),
 });
 
-export const Home = () => {
-  // const [isHidden, setIsHidden] = useState(false);
+export default function Home() {
   const todos = useSelector((state) => state.todos.todos);
   // const navigation = useNavigation();
 
@@ -33,7 +33,9 @@ export const Home = () => {
   // }, []);
 
   return (
-    todos.length > 0 ? <DisplayTasks/> : <TaskComplete />
-    
+    <>
+      {todos.length > 0 ? <DisplayTasks /> : <TaskComplete />}
+      <AddTask />
+    </>
   );
-};
+}
