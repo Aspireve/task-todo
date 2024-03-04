@@ -1,6 +1,8 @@
+
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
-import { Alert } from 'react-native';
+import Constants from 'expo-constants';
+import { Alert, Platform } from 'react-native';
 
 const registerForPushNotificationsAsync = async () => {
     let token;
@@ -15,7 +17,9 @@ const registerForPushNotificationsAsync = async () => {
         Alert.alert("Error", "Permission denied for Notifications")
         return;
       }
-      token = (await Notifications.getExpoPushTokenAsync()).data;
+      token = await Notifications.getExpoPushTokenAsync({
+        projectId: Constants.expoConfig.extra.eas.projectId,
+      });
     } else {
         return;
     }
@@ -27,6 +31,7 @@ const registerForPushNotificationsAsync = async () => {
         lightColor: '#FF231F7C',
       });
     }
+    console.log("Token saved", token)
     return token;
 }
 

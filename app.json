@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ad29294a-7a84-4bcc-af01-48c8ae4c5daa"
+      }
+    },
+    "owner": "metahuman08"
   }
 }

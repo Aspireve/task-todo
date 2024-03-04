@@ -5,19 +5,26 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   TouchableOpacity,
-  Button,
   Switch,
+  Alert,
 } from "react-native";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addTodo, saveTodos } from "../redux/slice";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { useNavigation } from "@react-navigation/native";
+import { scheduleTodoNotification } from "../utility/scheduleTodoNotification";
 
 export default function NewTask() {
   const [name, setName] = useState("");
-  const [date, setDate] = useState(new Date());
+  const [taskdate, setTaskDate] = useState(new Date());
   const [time, setTime] = useState(new Date());
   const [mode, setMode] = useState("date");
   const [open, setOpen] = useState(false);
   const [withAlert, setWithAlert] = useState(false);
+  const dispatch = useDispatch();
+  const navigation = useNavigation()
+  const listTodos = useSelector((state) => state.todos.todos);
   const monthNames = [
     "January",
     "February",
@@ -37,8 +44,7 @@ export default function NewTask() {
     if (mode === "time") {
       setTime(selectedDate);
     } else if (mode === "date") {
-      console.log("date");
-      setDate(selectedDate);
+      setTaskDate(selectedDate);
     }
     setOpen(false);
   };
@@ -56,7 +62,32 @@ export default function NewTask() {
     showMode("time");
   };
 
-  const addTodo = () => {};
+  const addTodoToList = async () => {
+    const date = taskdate.getDate();
+    const month = taskdate.getMonth();
+    const year = taskdate.getFullYear();
+    const hours = time.getHours();
+    const minutes = time.getMinutes();
+    const combinedDate = `${year}-${month < 9 ? "0": ""}${month+1}-${date < 10 ? "0": ""}${date} ${hours}:${minutes}:00`
+    const newTodo = {
+      id: Math.floor(Math.random() * 1000000),
+      text: name,
+      isCompleted: false,
+      time: combinedDate,
+    };
+    try {
+      const new_todos = [...listTodos, newTodo]
+      dispatch(saveTodos(new_todos))
+      dispatch(addTodo(newTodo));
+      if(withAlert){
+          await scheduleTodoNotification(newTodo);
+          console.log("scheduled")
+      }
+      navigation.goBack();
+    } catch (e) {
+      Alert.alert("Error", e);
+    }
+  };
 
   return (
     <TouchableWithoutFeedback>
@@ -84,11 +115,11 @@ export default function NewTask() {
           <Text style={styles.inputTitle}>Date</Text>
           <TouchableOpacity onPress={showDatepicker}>
             <Text>
-              {monthNames[date.getMonth()] +
+              {monthNames[taskdate.getMonth()] +
                 " " +
-                date.getDate() +
+                taskdate.getDate() +
                 ", " +
-                date.getFullYear()}
+                taskdate.getFullYear()}
             </Text>
           </TouchableOpacity>
           {open && (
@@ -125,7 +156,7 @@ export default function NewTask() {
           />
         </View>
 
-        <TouchableOpacity onPress={addTodo} style={styles.button}>
+        <TouchableOpacity onPress={addTodoToList} style={styles.button}>
           <Text style={{ color: "white" }}>Done</Text>
         </TouchableOpacity>
       </View>

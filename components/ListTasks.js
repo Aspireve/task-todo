@@ -1,5 +1,4 @@
-import { FlatList, Text } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+import { FlatList } from "react-native";
 import Tasks from "./Tasks";
 
 export default function ListTasks({listTodos}) {

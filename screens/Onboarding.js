@@ -52,7 +52,6 @@ export default function Onboarding() {
 }
 
 const iphoneHeight = Dimensions.get("window").height;
-console.log(iphoneHeight);
 
 const styles = StyleSheet.create({
   container: {

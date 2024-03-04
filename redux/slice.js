@@ -2,32 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const initialState = {
-  todos: [
-    {
-      "id": 1,
-      "text": "Take out the trash",
-      "isCompleted": true,
-      "time": "2024-03-02 00:00:00"
-    },
-    {
-      "id": 2,
-      "text": "Meeting with the boss",
-      "isCompleted": false,
-      "time": "2024-03-03 00:00:00"
-    },
-    {
-      "id": 3,
-      "text": "Dentist appointment",
-      "isCompleted": true,
-      "time": "2024-03-10 00:00:00"
-    },
-    {
-      "id": 4,
-      "text": "Dentist appointment",
-      "isCompleted": true,
-      "time": "2024-03-21 00:00:00"
-    }
-  ],
+  todos: [],
 };
 
 export const todosSlice = createSlice({
@@ -74,7 +49,7 @@ export const fetchTodos = () => async (dispatch) => {
   }
 };
 
-export const saveTodos = (todos) => async () => {
+export const saveTodos = (todos) => async (dispatch) => {
   try {
     await AsyncStorage.setItem("todos", JSON.stringify(todos));
   } catch (error) {

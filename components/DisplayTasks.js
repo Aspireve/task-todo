@@ -6,7 +6,7 @@ import {
   StatusBar,
   StyleSheet,
 } from "react-native";
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import getDateStatus from "../utility/getDateStatus";
 import { useSelector, useDispatch } from "react-redux";
 import ListTasks from "./ListTasks";

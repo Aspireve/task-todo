@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import TaskState from "../components/TaskState";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fetchTodos } from "../redux/slice";
 import ListTasks from "../components/ListTasks";
 import * as Notifications from "expo-notifications";
@@ -23,12 +23,13 @@ Notifications.setNotificationHandler({
 
 export default function Home() {
   const todos = useSelector((state) => state.todos.todos);
+  const [expoPushToken, setExpoPushToken] = useState('');
   const navigation = useNavigation();
 
   useEffect(() => {
-    // registerForPushNotificationsAsync().then((token) =>
-    //   setExpoPushToken(token)
-    // );
+    registerForPushNotificationsAsync().then((token) =>
+      setExpoPushToken(token)
+    );
     checkFirstLaunch(navigation);
   }, []);
 
